@@ -1468,10 +1468,19 @@ input, select, textarea {
 
 			.gallery article .image {
 				margin: 0;
+                background: rgba(0,0,0,0.5);
 				display: block;
 			}
 
-			.gallery article:nth-last-child(1n) {
+            .gallery .from-left {
+                padding: 0 5px 5px 0;
+            }
+			
+            .gallery .from-right {
+                padding: 0 0 5px 5px;
+            }
+
+            .gallery article:nth-last-child(1n) {
 				-moz-transition-delay: 0.05s;
 				-webkit-transition-delay: 0.05s;
 				-ms-transition-delay: 0.05s;
@@ -1842,6 +1851,14 @@ input, select, textarea {
 					width: 100%;
 				}
 
+
+                .gallery .from-left {
+                    padding: 0 0 5px 0;
+                }
+	    		
+                .gallery .from-right {
+                    padding: 0 0 5px 0;
+                }
 		}
 
 /* Header */
