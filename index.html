@@ -252,27 +252,68 @@
      </p>
     </header>
     <div class="box">
-     <form method="POST" action="https://formspree.io/xyynnpyp">
+     <form action="https://formspree.io/xyynnpyp" method="POST">
       <div class="fields">
        <div class="field half">
-        <input name="name" placeholder="Nombre" type="text"/>
+        <input name="name" placeholder="Nombre" required="" type="text"/>
        </div>
        <div class="field half">
-        <input name="email" placeholder="Correo electrónico" type="email"/>
+        <input name="email" placeholder="Correo electrónico" required="" type="email"/>
        </div>
        <div class="field">
-        <textarea name="message" placeholder="Mensaje" rows="6"></textarea>
+        <textarea name="message" placeholder="Mensaje" required="" rows="6"></textarea>
        </div>
       </div>
       <ul class="actions special">
        <li>
-        <input type="submit" value="Enviar Mensaje"/>
+        <input id="submit_button" type="submit" value="Enviar Mensaje"/>
        </li>
+       <p id="my-form-status">
+       </p>
       </ul>
      </form>
     </div>
    </div>
   </section>
+  <!-- Modal -->
+  <div id="modal-container">
+   <div class="modal-background">
+    <div class="modal" id="loading">
+     <div class="row">
+      <div id="loader">
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="dot">
+       </div>
+       <div class="lading">
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="modal" id="message">
+     <h2>
+     </h2>
+     <p>
+     </p>
+     <svg class="modal-svg" height="100%" preserveaspectratio="none" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <rect fill="none" height="162" rx="3" ry="3" width="226" x="0" y="0">
+      </rect>
+     </svg>
+    </div>
+   </div>
+  </div>
   <!-- Footer -->
   <footer id="footer">
    <!-- Icons -->
@@ -334,6 +375,8 @@
   <script src="assets/js/util.js">
   </script>
   <script src="assets/js/main.js">
+  </script>
+  <script src="assets/js/fromspree.js">
   </script>
  </body>
 </html>

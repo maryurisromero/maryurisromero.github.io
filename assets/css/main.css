@@ -32,6 +32,11 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+body.modal-active {
+    min-height:100%;
+    height:100%;
+    overflow: hidden;
+}
 
 ol, ul {
 	list-style: none;
@@ -2193,6 +2198,708 @@ input, select, textarea {
 			}
 
 		}
+
+/* Message Modal */
+/*
+ * This code segment was created by Jesse Couch & Shafayat Hossain and later modified by Giomar Osorio, if you want to know more about the code visit the original authors:
+ * (Jesse Couch, message and modal desing) https://codepen.io/designcouch
+ * (Shafayat Hossain, loading desing) https://codepen.io/jQsafi
+ */
+ #modal-container {
+	 position: fixed;
+	 display: table;
+	 height: 100%;
+	 width: 100%;
+	 top: 0;
+	 left: 0;
+	 transform: scale(0);
+	 z-index: 9999;
+}
+    #modal-container.in {
+        transform: scale(1);
+    }
+    
+        #modal-container.in .modal-background {
+            background: rgba(0, 0, 0, .0);
+            animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        #modal-container.in.loading .modal-background #loading{
+            background-color: white;
+            display: inline-block;
+            animation: modalFadeIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+        
+        #modal-container.in.message .modal-background #message {
+            background-color: transparent;
+            display: inline-block;
+            animation: modalFadeIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+            #modal-container.in.message .modal-background #message h2,
+            #modal-container.in.message .modal-background #message p,
+            #modal-container.in.message .modal-background #message .content-bongo {
+                opacity: 0;
+                position: relative;
+                animation: modalContentFadeIn 0.5s 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            }
+
+            #modal-container.in.message .modal-background #message .modal-svg rect {
+                animation: sketchIn 0.5s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            }
+
+    #modal-container.in.out {
+        animation: quickScaleDown 0s 0.5s linear forwards;
+    }
+
+        #modal-container.in.out .modal-background {
+            animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+            #modal-container.in.out .modal-background #message{
+                animation: modalFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            }
+
+                #modal-container.in.out .modal-background #message h2,
+                #modal-container.in.out .modal-background #message p,
+                #modal-container.in.out .modal-background #message .content-bongo {
+                    animation: modalContentFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+                }   
+
+                #modal-container.in.out .modal-background #message .modal-svg rect {
+                    animation: sketchOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+                }
+                
+    #modal-container .modal-background {
+        display: table-cell;
+        background: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        vertical-align: middle;
+    }
+
+        #modal-container .modal-background #loading {
+            background: white;
+            padding: 0;
+            display: none;
+            border-radius: 3px;
+            font-weight: 300;
+        }
+
+            #modal-container .modal-background #loading #loader {
+                bottom: 0;
+                height: 175px;
+                left: 0;
+                margin: auto;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 175px;
+            }
+
+                #modal-container .modal-background #loading #loader .dot {
+                    bottom: 0;
+                    height: 100%;
+                    left: 0;
+                    margin: auto;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 87.5px;
+                }
+
+                #modal-container .modal-background #loading #loader .dot::before {
+                    border-radius: 100%;
+                    content: "";
+                    height: 87.5px;
+                    left: 0;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    transform: scale(0);
+                    width: 87.5px;
+                }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+1) {
+                        transform: rotate(45deg);
+                    }
+                
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+1)::before {
+                        animation: 0.8s linear 0.1s normal none infinite running load;
+                        background: #00ff80 none repeat scroll 0 0;
+                    }
+                    
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+2) {
+                        transform: rotate(90deg);
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+2)::before {
+                        animation: 0.8s linear 0.2s normal none infinite running load;
+                        background: #00ffea none repeat scroll 0 0;
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+3) {
+                        transform: rotate(135deg);
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+3)::before {
+                        animation: 0.8s linear 0.3s normal none infinite running load;
+                        background: #00aaff none repeat scroll 0 0;
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+4) {
+                        transform: rotate(180deg);
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+4)::before {
+                        animation: 0.8s linear 0.4s normal none infinite running load;
+                        background: #0040ff none repeat scroll 0 0;
+                    }
+                    
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+5) {
+                        transform: rotate(225deg);
+                    }
+                    
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+5)::before {
+                        animation: 0.8s linear 0.5s normal none infinite running load;
+                        background: #2a00ff none repeat scroll 0 0;
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+6) {
+                        transform: rotate(270deg);
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+6)::before {
+                        animation: 0.8s linear 0.6s normal none infinite running load;
+                        background: #9500ff none repeat scroll 0 0;
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+7) {
+                        transform: rotate(315deg);
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+7)::before {
+                        animation: 0.8s linear 0.7s normal none infinite running load;
+                        background: magenta none repeat scroll 0 0;
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+8) {
+                        transform: rotate(360deg);
+                    }
+
+                    #modal-container .modal-background #loading #loader .dot:nth-child(7n+8)::before {
+                        animation: 0.8s linear 0.8s normal none infinite running load;
+                        background: #ff0095 none repeat scroll 0 0;
+                    }
+
+                #modal-container .modal-background #loading #loader .lading {
+                    background-image: url("../images/loading.gif");
+                    background-position: 50% 50%;
+                    background-repeat: no-repeat;
+                    bottom: -40px;
+                    height: 20px;
+                    left: 0;
+                    position: absolute;
+                    right: 0;
+                    width: 180px;
+                }
+
+        #modal-container .modal-background #message {
+            background: white;
+            padding: 50px;
+            display: none;
+            /*display: inline-block;*/
+            border-radius: 3px;
+            font-weight: 300;
+            position: relative;
+        }
+        
+            #modal-container .modal-background #message h2 {
+                font-size: 25px;
+                line-height: 25px;
+                margin-bottom: 15px;
+            }
+            
+            #modal-container .modal-background #messsage p {
+                font-size: 18px;
+                line-height: 22px;
+            }
+            
+            #modal-container .modal-background #message .modal-svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                border-radius: 3px;
+            }
+            
+            #modal-container .modal-background #message .modal-svg rect {
+                stroke: #fff;
+                stroke-width: 2px;
+                stroke-dasharray: 778;
+                stroke-dashoffset: 778;
+            }
+            
+    @keyframes fadeIn {
+    	 0% {
+    		 background: rgba(0, 0, 0, .0);
+    	}
+    	 100% {
+    		 background: rgba(0, 0, 0, .7);
+    	}
+    }
+    
+    @keyframes fadeOut {
+    	 0% {
+    		 background: rgba(0, 0, 0, .7);
+    	}
+    	 100% {
+    		 background: rgba(0, 0, 0, .0);
+    	}
+    }
+
+    @keyframes sketchIn {
+    	 0% {
+    		 stroke-dashoffset: 778;
+    	}
+    	 100% {
+    		 stroke-dashoffset: 0;
+    	}
+    }
+
+    @keyframes sketchOut {
+    	 0% {
+    		 stroke-dashoffset: 0;
+    	}
+    	 100% {
+    		 stroke-dashoffset: 778;
+    	}
+    }
+    @keyframes modalFadeIn {
+    	 0% {
+    		 background-color: transparent;
+    	}
+    	 100% {
+    		 background-color: white;
+    	}
+    }
+    
+    @keyframes modalFadeOut {
+    	 0% {
+    		 background-color: white;
+    	}
+    	 100% {
+    		 background-color: transparent;
+    	}
+    }
+    
+    @keyframes modalContentFadeIn {
+    	 0% {
+    		 opacity: 0;
+    		 top: -20px;
+    	}
+    	 100% {
+    		 opacity: 1;
+    		 top: 0;
+	    }
+    }
+    
+    @keyframes modalContentFadeOut {
+	    0% {
+		    opacity: 1;
+		    top: 0px;
+	    }
+	    100% {
+		    opacity: 0;
+		    top: -20px;
+	    }
+    }
+    
+    @keyframes quickScaleDown {
+    	 0% {
+	    	 transform: scale(1);
+    	}
+	     99.9% {
+    		 transform: scale(1);
+	    }
+    	 100% {
+		    transform: scale(0);
+	    }
+    }
+
+    @keyframes load {
+        100% {
+            opacity: 0;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes load {
+        100% {
+            opacity: 0;
+            transform: scale(1);
+        }
+    }
+
+
+/* Bongo Cat */
+/*
+ * This code segment was created by Caroline Artz and later modified by Giomar Osorio, if you want to know more about the code visit the original author: https://codepen.io/carolineartz
+*/
+#bongo-cat {
+  height: 20vh;
+  width: 20vw;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 2em;
+}
+
+.typing-animation {
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-duration: 1200ms;
+          animation-duration: 1200ms;
+}
+
+path#f1-l1 {
+  -webkit-animation-name: typing-f1-l1;
+          animation-name: typing-f1-l1;
+}
+
+path#f1-l2 {
+  -webkit-animation-name: typing-f1-l2;
+          animation-name: typing-f1-l2;
+}
+
+path#f1-l3 {
+  -webkit-animation-name: typing-f1-l3;
+          animation-name: typing-f1-l3;
+}
+
+path#f2-l4 {
+  -webkit-animation-name: typing-f2-l4;
+          animation-name: typing-f2-l4;
+}
+
+path#f2-l5 {
+  -webkit-animation-name: typing-f2-l5;
+          animation-name: typing-f2-l5;
+}
+
+path#f2-l6 {
+  -webkit-animation-name: typing-f2-l6;
+          animation-name: typing-f2-l6;
+}
+
+path#f3-l7 {
+  -webkit-animation-name: typing-f3-l7;
+          animation-name: typing-f3-l7;
+}
+
+path#f3-l8 {
+  -webkit-animation-name: typing-f3-l8;
+          animation-name: typing-f3-l8;
+}
+
+path#f3-l9 {
+  -webkit-animation-name: typing-f3-l9;
+          animation-name: typing-f3-l9;
+}
+
+@-webkit-keyframes typing-f3-l9 {
+  0% {
+    d: path("M8,25L8,25");
+  }
+  82% {
+    d: path("M8,25L8,25");
+  }
+  92% {
+    d: path("M8,25L96,25");
+  }
+  100% {
+    d: path("M8,25L96,25");
+  }
+}
+
+@keyframes typing-f3-l9 {
+  0% {
+    d: path("M8,25L8,25");
+  }
+  82% {
+    d: path("M8,25L8,25");
+  }
+  92% {
+    d: path("M8,25L96,25");
+  }
+  100% {
+    d: path("M8,25L96,25");
+  }
+}
+@-webkit-keyframes typing-f3-l8 {
+  0% {
+    d: path("M8,13L8,13");
+  }
+  68% {
+    d: path("M8,13L8,13");
+  }
+  82% {
+    d: path("M8,13L146,13");
+  }
+  100% {
+    d: path("M8,13L146,13");
+  }
+}
+@keyframes typing-f3-l8 {
+  0% {
+    d: path("M8,13L8,13");
+  }
+  68% {
+    d: path("M8,13L8,13");
+  }
+  82% {
+    d: path("M8,13L146,13");
+  }
+  100% {
+    d: path("M8,13L146,13");
+  }
+}
+@-webkit-keyframes typing-f3-l7 {
+  0% {
+    d: path("M0,1L0,1");
+  }
+  60% {
+    d: path("M0,1L0,1");
+  }
+  68% {
+    d: path("M0,1L96,1");
+  }
+  100% {
+    d: path("M0,1L96,1");
+  }
+}
+@keyframes typing-f3-l7 {
+  0% {
+    d: path("M0,1L0,1");
+  }
+  60% {
+    d: path("M0,1L0,1");
+  }
+  68% {
+    d: path("M0,1L96,1");
+  }
+  100% {
+    d: path("M0,1L96,1");
+  }
+}
+@-webkit-keyframes typing-f2-l6 {
+  0% {
+    d: path("M8,25L8,25");
+  }
+  54% {
+    d: path("M8,25L8,25");
+  }
+  60% {
+    d: path("M8,25L69,25");
+  }
+  100% {
+    d: path("M8,25L69,25");
+  }
+}
+@keyframes typing-f2-l6 {
+  0% {
+    d: path("M8,25L8,25");
+  }
+  54% {
+    d: path("M8,25L8,25");
+  }
+  60% {
+    d: path("M8,25L69,25");
+  }
+  100% {
+    d: path("M8,25L69,25");
+  }
+}
+@-webkit-keyframes typing-f2-l5 {
+  0% {
+    d: path("M8,13L8,13");
+  }
+  44% {
+    d: path("M8,13L8,13");
+  }
+  54% {
+    d: path("M8,13L114,13");
+  }
+  100% {
+    d: path("M8,13L114,13");
+  }
+}
+@keyframes typing-f2-l5 {
+  0% {
+    d: path("M8,13L8,13");
+  }
+  44% {
+    d: path("M8,13L8,13");
+  }
+  54% {
+    d: path("M8,13L114,13");
+  }
+  100% {
+    d: path("M8,13L114,13");
+  }
+}
+@-webkit-keyframes typing-f2-l4 {
+  0% {
+    d: path("M0,1L0,1");
+  }
+  30% {
+    d: path("M0,1L0,1");
+  }
+  44% {
+    d: path("M0,1L136,1");
+  }
+  100% {
+    d: path("M0,1L136,1");
+  }
+}
+@keyframes typing-f2-l4 {
+  0% {
+    d: path("M0,1L0,1");
+  }
+  30% {
+    d: path("M0,1L0,1");
+  }
+  44% {
+    d: path("M0,1L136,1");
+  }
+  100% {
+    d: path("M0,1L136,1");
+  }
+}
+@-webkit-keyframes typing-f1-l3 {
+  0% {
+    d: path("M8,25L8,25");
+  }
+  24% {
+    d: path("M8,25L8,25");
+  }
+  30% {
+    d: path("M8,25L61,25");
+  }
+  100% {
+    d: path("M8,25L61,25");
+  }
+}
+@keyframes typing-f1-l3 {
+  0% {
+    d: path("M8,25L8,25");
+  }
+  24% {
+    d: path("M8,25L8,25");
+  }
+  30% {
+    d: path("M8,25L61,25");
+  }
+  100% {
+    d: path("M8,25L61,25");
+  }
+}
+@-webkit-keyframes typing-f1-l2 {
+  0% {
+    d: path("M813L8,13");
+  }
+  14% {
+    d: path("M8,13L8,13");
+  }
+  24% {
+    d: path("M8,13L124,13");
+  }
+  100% {
+    d: path("M8,13L124,13");
+  }
+}
+@keyframes typing-f1-l2 {
+  0% {
+    d: path("M8,13L8,13");
+  }
+  14% {
+    d: path("M8,13L8,13");
+  }
+  24% {
+    d: path("M8,13L124,13");
+  }
+  100% {
+    d: path("M8,13L124,13");
+  }
+}
+@-webkit-keyframes typing-f1-l1 {
+  0% {
+    d: path("M0,1L0,1");
+  }
+  14% {
+    d: path("M0,1L160,1");
+  }
+  100% {
+    d: path("M0,1L160,1");
+  }
+}
+@keyframes typing-f1-l1 {
+  0% {
+    d: path("M0,1L0,1");
+  }
+  14% {
+    d: path("M0,1L160,1");
+  }
+  100% {
+    d: path("M0,1L160,1");
+  }
+}
+#paw-right--up,
+#paw-right--down,
+#paw-left--up,
+#paw-left--down {
+  -webkit-animation: blink 300ms infinite;
+          animation: blink 300ms infinite;
+}
+
+#paw-right--up,
+#paw-left--down {
+  -webkit-animation-delay: 150ms;
+          animation-delay: 150ms;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  49% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  49% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+#laptop__code {
+  -webkit-transform: rotateX(-37deg) rotateY(-46deg) rotateZ(-23deg) translateX(8px) translateY(20px) translateZ(-50px);
+          transform: rotateX(-37deg) rotateY(-46deg) rotateZ(-23deg) translateX(8px) translateY(20px) translateZ(-50px);
+}
 
 /* Footer */
 
